@@ -107,6 +107,7 @@ main(){
         do_prepare_env
         return 0
     else
+        export KAS_WORK_DIR=$PRJ_DIR
         source $PRJ_DIR/orca-env/bin/activate || {
             echo "Error - Unable to create python's vitual environment"
             exit 1
