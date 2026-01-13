@@ -1,0 +1,8 @@
+header:
+  version: 18
+
+local_conf_header:
+  shared: |
+    NO_RECOMMENDATIONS = "1"
+    SSTATE_DIR="/home/mbkd/Documents/Yocto_Scarthgap/YoctoShare/sstate-cache"
+    DL_DIR="/home/mbkd/Documents/Yocto_Scarthgap/YoctoShare/downloads"

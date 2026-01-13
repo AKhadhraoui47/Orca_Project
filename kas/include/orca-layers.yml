@@ -1,0 +1,18 @@
+header:
+  version: 18
+
+repos:  
+  meta-orca-distro:
+    path: meta-orca-distro/
+    layers:
+      .:
+
+  meta-orca-bsp:
+    path: meta-orca-bsp/
+    layers:
+      .:
+
+  meta-orca-prj:
+    path: meta-orca-prj/
+    layers:
+      .:

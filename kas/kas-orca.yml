@@ -1,0 +1,9 @@
+header:
+  version: 18
+  includes:
+    - include/layers.yml
+    - include/local.yml
+    - include/orca-layers.yml
+
+machine: stm32mp13-disco
+distro: nodistro

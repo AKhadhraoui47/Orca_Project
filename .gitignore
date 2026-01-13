@@ -1,0 +1,5 @@
+layers/
+.kas_shell_history
+build/
+orca-env/
+.vscode/

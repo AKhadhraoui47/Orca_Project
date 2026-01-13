@@ -1,0 +1,34 @@
+header:
+  version: 18
+
+repos:  
+  meta-st-stm32mp:
+    url: http://github.com/stmicroelectronics/meta-st-stm32mp
+    path: layers/meta-st-stm32mp
+    branch: scarthgap
+    commit: fae1c3b
+    layers: 
+      .:
+  openembedded-core:
+    url: https://git.openembedded.org/openembedded-core
+    path: layers/openembedded-core
+    branch: scarthgap
+    commit: 6988157ad983978ffd6b12bcefedd4deaffdbbd1
+    layers:
+      meta:
+  bitbake:
+    url: https://git.openembedded.org/bitbake
+    path: layers/bitbake
+    branch: "2.8"
+    commit: 8dcf084522b9c66a6639b5f117f554fde9b6b45a
+    layers:
+      bitbake: disabled
+  meta-openembedded:
+    url: https://git.openembedded.org/meta-openembedded
+    path: layers/meta-openembedded
+    branch: scarthgap
+    commit: 2b26d30fc7f478f5735d514f0c1bc28f6a4148b6
+    layers:
+      meta-python:
+      meta-oe:
+  
