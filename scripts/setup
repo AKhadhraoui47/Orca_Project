@@ -51,18 +51,10 @@ do_prepare_env(){
             echo "ERROR - Could create shared sstate-cache directory"
             exit 1
         }
+        return 0
+    else
+        return 0
     fi
-    sstate_dir=$share_dir/sstate-cache
-    dl_dir=$share_dir/downloads
-    sed -i 's:SSTATE_DIR=.*:SSTATE_DIR="'"$sstate_dir"'":' $PRJ_DIR/kas/include/local.yml || {
-        echo "ERROR - Could not update local.yml with sstate-cache directory"
-        exit 1
-    }
-    sed -i 's:DL_DIR=.*:DL_DIR="'"$dl_dir"'":' $PRJ_DIR/kas/include/local.yml || {
-        echo "ERROR - Could not update local.yml with downloads directory"
-        exit 1
-    }
-    return 0
 }
 
 Usage(){
@@ -119,7 +111,8 @@ main(){
             echo "Error - Unable to create python's vitual environment"
             exit 1
         }
-        kas-container $cmd $kas_yaml || {
+        local share_dir=$(dirname $PRJ_DIR)/YoctoShare
+        kas-container --runtime-args "-v $share_dir:/work/share/:rw" $cmd $kas_yaml || {
         echo "Error - Environment exit with error"
         exit 1 
         }

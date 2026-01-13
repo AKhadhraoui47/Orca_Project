@@ -1,9 +1,9 @@
 header:
   version: 18
   includes:
-    - include/layers.yml
-    - include/local.yml
-    - include/orca-layers.yml
+    - kas/include/layers.yml
+    - kas/include/local.yml
+    - kas/include/orca-layers.yml
 
 machine: stm32mp13-disco
 distro: nodistro

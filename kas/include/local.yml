@@ -4,5 +4,5 @@ header:
 local_conf_header:
   shared: |
     NO_RECOMMENDATIONS = "1"
-    SSTATE_DIR="/home/mbkd/Documents/Yocto_Scarthgap/YoctoShare/sstate-cache"
-    DL_DIR="/home/mbkd/Documents/Yocto_Scarthgap/YoctoShare/downloads"
+    SSTATE_DIR="/work/share/sstate-cache"
+    DL_DIR="/work/share/downloads"
