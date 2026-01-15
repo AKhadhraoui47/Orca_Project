@@ -59,7 +59,7 @@ do_prepare_env(){
 
 Usage(){
     echo "Usage - ./setupenv [command] [path/to/kas/.yml] OR ./setupenv prepare"
-    echo "Usage - command: shell/build/checkout"
+    echo "Usage - command: shell/build/checkout/clean"
 }
 
 do_check_args(){ 
@@ -80,7 +80,7 @@ do_check_args(){
         else
             local cmd=$1
             local kas_yaml=$2
-            if [ $cmd != "shell" ] && [ $cmd != "build" ] && [ $cmd != "checkout" ]
+            if [ $cmd != "shell" ] && [ $cmd != "build" ] && [ $cmd != "checkout" ] && [ $cmd != "clean" ]
             then
                 echo "Error - Unknown commmand"
                 Usage 
