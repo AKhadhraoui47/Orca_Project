@@ -58,7 +58,7 @@ do_prepare_env(){
 }
 
 Usage(){
-    echo "Usage - ./setup [command] [path/to/kas/.yml] OR ./setup prepare"
+    echo "Usage - ./setupenv [command] [path/to/kas/.yml] OR ./setupenv prepare"
     echo "Usage - command: shell/build/checkout"
 }
 

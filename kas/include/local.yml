@@ -6,3 +6,8 @@ local_conf_header:
     NO_RECOMMENDATIONS = "1"
     SSTATE_DIR="/work/share/sstate-cache"
     DL_DIR="/work/share/downloads"
+
+  ressources: |
+    PARALLEL_MAKE = "-j 10"
+    BB_NUMBER_THREADS = "12"
+

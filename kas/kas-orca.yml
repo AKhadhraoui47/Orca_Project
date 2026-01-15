@@ -6,4 +6,5 @@ header:
     - kas/include/orca-layers.yml
 
 machine: stm32mp13-disco
-distro: nodistro
+distro: orca
+target: core-image-minimal
