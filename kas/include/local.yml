@@ -7,6 +7,9 @@ local_conf_header:
     SSTATE_DIR="/work/share/sstate-cache"
     DL_DIR="/work/share/downloads"
 
+  security: |
+    INHERIT += "cve-check"
+
   ressources: |
     PARALLEL_MAKE = "-j 10"
     BB_NUMBER_THREADS = "12"
