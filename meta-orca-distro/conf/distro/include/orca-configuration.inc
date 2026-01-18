@@ -4,8 +4,11 @@ include conf/distro/include/cve-extra-exclusions.inc
 #no GPL v3
 require conf/distro/include/no-gplv3.inc
 
+#enhanced security flags
+require conf/distro/include/security_flags.inc
+
 OVERRIDES =. "${MNGR_SLCT}:"
-MNGR_SLCT ??= "sysd"
+INIT_MANAGER ="systemd"
 INIT_MANAGER:sysd = "systemd"
 INIT_MANAGER:sysv = "sysvinit"
 

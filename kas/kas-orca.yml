@@ -7,4 +7,4 @@ header:
 
 machine: stm32mp13-disco
 distro: orca
-target: core-image-minimal
+target: orca-image-core
