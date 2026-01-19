@@ -6,7 +6,11 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=801f80980d171dd6425610833a22dbe6"
 inherit image
 
 IMAGE_FEATURES = ""
-IMAGE_INSTALL = "packagegroup-core-boot"
+IMAGE_INSTALL = "\
+    systemd \ 
+    zsh \
+    coreutils \
+    "
 IMAGE_NAME = "${BPN}"
 
 inherit extrausers
