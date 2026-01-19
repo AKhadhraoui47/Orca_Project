@@ -7,6 +7,7 @@ inherit image
 
 IMAGE_FEATURES = ""
 IMAGE_INSTALL = "packagegroup-core-boot"
+IMAGE_NAME = "${BPN}"
 
 inherit extrausers
 EXTRA_USERS_PARAMS = "\
