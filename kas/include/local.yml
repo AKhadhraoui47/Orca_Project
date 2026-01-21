@@ -12,5 +12,7 @@ local_conf_header:
 
   ressources: |
     PARALLEL_MAKE = "-j 10"
+    PARALLEL_MAKEINST = "${PARALLEL_MAKE}"
     BB_NUMBER_THREADS = "12"
+    BB_NUMBER_PARSE_THREADS = "${BB_NUMBER_THREADS}"
 
