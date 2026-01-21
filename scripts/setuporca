@@ -41,22 +41,27 @@ do_prepare_env(){
     fi
     sed -i -e 's:PARALLEL_MAKE.*:PARALELL_MAKE = "'"-j $(( $(nproc) / 2 ))"'":' $PRJ_DIR/kas/include/local.yml
     sed -i -e 's:BB_NUMBER_THREADS.*:BB_NUMBER_THREADS = "'"-j $(( $(nproc) / 2 ))"'":' $PRJ_DIR/kas/include/local.yml
-    local share_dir=$(dirname $PRJ_DIR)/YoctoShare
-    if ! [ -d $share_dir/downloads ] || ! [ -d $share_dir/sstate-cache ]
-    then 
-        echo "Creating shared volume for downloads and sstate-cache..."
-        mkdir -p $share_dir/downloads || {
-            echo "ERROR - Could create shared downloads directory"
-            exit 1
-        }
-        mkdir -p $share_dir/sstate-cache || {
-            echo "ERROR - Could create shared sstate-cache directory"
-            exit 1
-        }
-        return 0
-    else
-        return 0
-    fi
+
+    [ -n $(sed 's/share\://' $PRJ_DIR/scripts/.info) ] || {
+        local share_dir=$(dirname $PRJ_DIR)/YoctoShare
+        if ! [ -d $share_dir/downloads ] || ! [ -d $share_dir/sstate-cache ]
+        then 
+            echo "Creating shared volume for downloads and sstate-cache..."
+            mkdir -p $share_dir/downloads || {
+                echo "ERROR - Could create shared downloads directory"
+                exit 1
+            }
+            mkdir -p $share_dir/sstate-cache || {
+                echo "ERROR - Could create shared sstate-cache directory"
+                exit 1
+            }
+            echo "share:$sharedir" >> $PRJ_DIR/scripts/.info
+            return 0
+        else
+            return 0
+        fi
+    }
+    return 0
 }
 
 Usage(){
@@ -67,12 +72,15 @@ Usage(){
 do_check_args(){ 
     if [ $# -eq 1 ]
     then
-        [ "$1" == "prepare" ] || {
+        if [ "$1" == "prepare" ]
+        then
+            touch $PRJ_DIR/scripts/.info 
+            return 0
+        else
             echo "Error - Unexpected command that takes no arguments"
             Usage
             exit 1
-        }
-        return 0
+        fi
     else
         if [ $# -ne 2 ] 
         then
@@ -80,22 +88,40 @@ do_check_args(){
             Usage
             exit 1
         else
-            local cmd=$1
-            local kas_yaml=$2
-            if [ $cmd != "shell" ] && [ $cmd != "build" ] && [ $cmd != "checkout" ] && [ $cmd != "clean" ]
+            if [ "$1" == "prepare" ] 
             then
-                echo "Error - Unknown commmand"
-                Usage 
-                exit 1
-            else
-                if ! [ -f $kas_yaml ] || [[ $kas_yaml =~ *'.yml' ]]
-                then
-                    echo "Error - Could not find a compliant file"
+                touch $PRJ_DIR/scripts/.info
+                local yshare_dir = $(realpath $2)
+                [ [ -d $yshare_dir/downloads ] && [ -d $yshare_dir/sstate_cache ] ] || {
+                    echo "Error - Invalid share directory: path/to/share/directory/downloads and path/to/share/directory/sstate_cache must be available"
                     Usage
                     exit 1
+                }
+                if [ -z $(sed 's/share\://' $PRJ_DIR/scripts/.info) ] 
+                then
+                    echo "share:$yshare_dir" >> $PRJ_DIR/scripts/.info
+                else
+                    sed 's/share.*/share:$yshare_dir/' $PRJ_DIR/scripts/.info
                 fi
+                return 0
+            else
+                local cmd=$1
+                local kas_yaml=$2
+                if [ $cmd != "shell" ] && [ $cmd != "build" ] && [ $cmd != "checkout" ] && [ $cmd != "clean" ]
+                then
+                    echo "Error - Unknown commmand"
+                    Usage 
+                    exit 1
+                else
+                    if ! [ -f $kas_yaml ] || [[ $kas_yaml =~ *'.yml' ]]
+                    then
+                        echo "Error - Could not find a compliant file"
+                        Usage
+                        exit 1
+                    fi
+                fi
+                return 0
             fi
-            return 0
         fi
     fi
 }
@@ -114,7 +140,7 @@ main(){
             echo "Error - Unable to create python's vitual environment"
             exit 1
         }
-        local share_dir=$(dirname $PRJ_DIR)/YoctoShare
+        local share_dir=$(sed 's/share\://' $PRJ_DIR/scripts/.info)
         kas-container --runtime-args "-v $share_dir:/work/share/:rw" $cmd $kas_yaml || {
         echo "Error - Environment exit with error"
         exit 1 

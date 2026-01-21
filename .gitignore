@@ -3,3 +3,5 @@ layers/
 build/
 orca-env/
 .vscode/
+scripts/.info
+share/
