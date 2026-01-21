@@ -2,8 +2,10 @@ header:
   version: 18
 
 local_conf_header:
-  shared: |
+  recommendations: |
     NO_RECOMMENDATIONS = "1"
+
+  shared: |
     SSTATE_DIR="/work/share/sstate-cache"
     DL_DIR="/work/share/downloads"
 
@@ -11,8 +13,8 @@ local_conf_header:
     INHERIT += "cve-check"
 
   ressources: |
-    PARALLEL_MAKE = "-j 10"
+    PARALLEL_MAKE = "-j 8"
     PARALLEL_MAKEINST = "${PARALLEL_MAKE}"
-    BB_NUMBER_THREADS = "12"
+    BB_NUMBER_THREADS = "-j 8"
     BB_NUMBER_PARSE_THREADS = "${BB_NUMBER_THREADS}"
 

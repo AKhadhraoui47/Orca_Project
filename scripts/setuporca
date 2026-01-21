@@ -39,8 +39,9 @@ do_prepare_env(){
             echo "KAS already installed in python's virtual environment"
         fi
     fi
-    sed -i -e 's:PARALLEL_MAKE.*:PARALELL_MAKE = "'"-j $(( $(nproc) / 2 ))"'":' $PRJ_DIR/kas/include/local.yml
-    sed -i -e 's:BB_NUMBER_THREADS.*:BB_NUMBER_THREADS = "'"-j $(( $(nproc) / 2 ))"'":' $PRJ_DIR/kas/include/local.yml
+
+    sed -i '0,/PARALLEL_MAKE/ s:PARALLEL_MAKE.*:PARALLEL_MAKE = "'"-j $(( $(nproc) / 2 ))"'":' $PRJ_DIR/kas/include/local.yml
+    sed -i '0,/BB_NUMBER_THREADS/ s:BB_NUMBER_THREADS.*:BB_NUMBER_THREADS = "'"-j $(( $(nproc) / 2 ))"'":' $PRJ_DIR/kas/include/local.yml
 
     [ -n $(sed 's/share\://' $PRJ_DIR/scripts/.info) ] || {
         local share_dir=$(dirname $PRJ_DIR)/YoctoShare
@@ -91,17 +92,18 @@ do_check_args(){
             if [ "$1" == "prepare" ] 
             then
                 touch $PRJ_DIR/scripts/.info
-                local yshare_dir = $(realpath $2)
-                [ [ -d $yshare_dir/downloads ] && [ -d $yshare_dir/sstate_cache ] ] || {
-                    echo "Error - Invalid share directory: path/to/share/directory/downloads and path/to/share/directory/sstate_cache must be available"
+                local yshare_dir=$(realpath $2)
+                if ! [ -d $yshare_dir/downloads ] || ! [ -d $yshare_dir/sstate-cache ] 
+                then
+                    echo "Error - Invalid share directory: path/to/share/directory/downloads and path/to/share/directory/sstate-cache must be available"
                     Usage
                     exit 1
-                }
+                fi
                 if [ -z $(sed 's/share\://' $PRJ_DIR/scripts/.info) ] 
                 then
-                    echo "share:$yshare_dir" >> $PRJ_DIR/scripts/.info
+                    echo -n "share:$yshare_dir" >> $PRJ_DIR/scripts/.info
                 else
-                    sed 's/share.*/share:$yshare_dir/' $PRJ_DIR/scripts/.info
+                    sed -i "s|share.*|share:${yshare_dir}|" $PRJ_DIR/scripts/.info
                 fi
                 return 0
             else
