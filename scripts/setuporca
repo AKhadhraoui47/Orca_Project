@@ -66,7 +66,7 @@ do_prepare_env(){
 }
 
 Usage(){
-    echo "Usage - ./setuporca [command] [path/to/kas/.yml] OR ./setuporca prepare"
+    echo "Usage - ./setuporca [command] [path/to/kas/.yml] OR ./setuporca prepare [optional: pathe/to/shared/yocto]"
     echo "Usage - command: shell/build/checkout/clean"
 }
 
