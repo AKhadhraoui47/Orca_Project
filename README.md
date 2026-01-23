@@ -71,7 +71,7 @@ user@hostname:~/dir$ setuporca prepare dir/to/share/
 
 -   This plugin reponsible for setting the python virtual environment where KAS will be installed isolated from your host system.
 
--   Determines a set of ressources limiting variables for Bitbake and Make, as it sets BB_NUMBER_THREADS and PARALELL_MAKE to half the number of available logical cores. You can manually change the values after running the command in [local.yml](kas/include/local.yml).
+-   Determines a set of ressources limiting variables for Bitbake and Make, as it sets BB_NUMBER_THREADS and PARALELL_MAKE to **half the number of available logical cores**. You can manually change the values after running the prepare command in [local.yml](kas/include/local.yml).
 
 -   If for any reason you changed the path to the shared directories where *downloads* and *sstate-cache* files are available you need to rerun the command, so the the **shared volume** between the host and KAS container is updated.
 
@@ -113,11 +113,9 @@ The theme for this project is based these core elements:
 
 Different image flavors are provided serving different purposes. You can choose which to use through *ORCA_TYPE* variable in [orca-image.bb](meta-orca-prj/recipes-images/orca/orca-image.bb).
 
--   **orcadev:** Providing development tools and libraries.
--   **orcadbg:** Providing debugging tools as strace, gdb ...
--   **orcacore:** Basic image that is just able to boot.
-
-All images provide a standard user, **login**: mpuser, **passwd:** linux.
+-   **orcadev:** Providing development tools, libraries, compiler, make, debugging tools as gdb, and profiling tools ... (root access with empty-password).
+-   **orcaprod:** Production image with builtin main application and limited user permissions. (ongoing developement)
+-   **orcacore:** Basic image that is just able to boot, with user **login**: mpuser, **passwd:** linux.
 
 ## References
 

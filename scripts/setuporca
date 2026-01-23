@@ -41,7 +41,7 @@ do_prepare_env(){
     fi
 
     sed -i '0,/PARALLEL_MAKE/ s:PARALLEL_MAKE.*:PARALLEL_MAKE = "'"-j $(( $(nproc) / 2 ))"'":' $PRJ_DIR/kas/include/local.yml
-    sed -i '0,/BB_NUMBER_THREADS/ s:BB_NUMBER_THREADS.*:BB_NUMBER_THREADS = "'"-j $(( $(nproc) / 2 ))"'":' $PRJ_DIR/kas/include/local.yml
+    sed -i '0,/BB_NUMBER_THREADS/ s:BB_NUMBER_THREADS.*:BB_NUMBER_THREADS = "'"$(( $(nproc) / 2 ))"'":' $PRJ_DIR/kas/include/local.yml
 
     [ -n $(sed 's/share\://' $PRJ_DIR/scripts/.info) ] || {
         local share_dir=$(dirname $PRJ_DIR)/YoctoShare
