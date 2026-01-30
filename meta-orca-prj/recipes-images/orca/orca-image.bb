@@ -6,4 +6,4 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=801f80980d171dd6425610833a22dbe6"
 inherit orca-image
 
 #You can choose which type of available images to choose according to your need: orcadbg/orcadev/orcacore
-ORCA_TYPE = "orcadev"
+ORCA_TYPE = "orcacore"

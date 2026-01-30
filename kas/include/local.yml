@@ -18,3 +18,6 @@ local_conf_header:
     BB_NUMBER_THREADS = "12"
     BB_NUMBER_PARSE_THREADS = "${BB_NUMBER_THREADS}"
 
+  buildhistory: |
+    INHERIT += "buildhistory"
+
