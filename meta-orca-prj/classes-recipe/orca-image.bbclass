@@ -16,6 +16,9 @@ IMAGE_INSTALL:append:sysv = " ${VIRTUAL-RUNTIME_initscripts} ${VIRTUAL-RUNTIME_l
 IMAGE_INSTALL:append:orcacore = " bash"
 IMAGE_INSTALL:append:orcadev = " packagegroup-core-base-utils packagegroup-core-buildessential"
 
+LINGUAS_INSTALL = ""
+IMAGE_LINGUAS = ""
+
 IMAGE_NAME = "${ORCA_TYPE}-image"
 
 inherit extrausers
