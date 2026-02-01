@@ -1,10 +1,10 @@
 header:
   version: 18
   includes:
+    - kas/include/orca-layers.yml
     - kas/include/layers.yml
     - kas/include/local.yml
-    - kas/include/orca-layers.yml
-
+    
 machine: stm32mp13-disco
 distro: orca
-target: orca-image
+target: orca-image-core
