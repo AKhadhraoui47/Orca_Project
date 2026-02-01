@@ -33,7 +33,7 @@ user@hostname:~$ cd dir
 Clone the project:
 
 ```bash
-user@hostname:~/dir$ git clone git@github.com:AKhadhraoui47/Orca_Project.git
+user@hostname:~/dir$ git clone --single-branch --branch main git@github.com:AKhadhraoui47/Orca_Project.git
 ```
 
 We will start by setting up the environment, directories and installing the different requirements (e.g KAS) by running the [setup script](#setuporca-script):
