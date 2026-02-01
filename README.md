@@ -115,7 +115,7 @@ Different image flavors are provided serving different purposes. You can choose 
 
 -   **orcadev:** Providing development tools, libraries, compiler, make, debugging tools as gdb, and profiling tools ... (root access with empty-password).
 -   **orcaprod:** Production image with builtin main application and limited user permissions. (ongoing developement)
--   **orcacore:** Basic image that is just able to boot, with user **login**: mpuser, **passwd:** linux.
+-   **orcacore:** Basic image that is just able to boot, with user **login**: calf, **passwd:** linux.
 
 ## References
 
