@@ -15,6 +15,8 @@ KERNEL_CONFIG_FRAGMENTS:append = " \
     ${WORKDIR}/fragments/${LINUX_VERSION}/less-multifunction-device-drivers.config \
     ${WORKDIR}/fragments/${LINUX_VERSION}/no-soundcard-support.config \
     ${WORKDIR}/fragments/${LINUX_VERSION}/no-usb-support.config \
+    ${WORKDIR}/fragments/${LINUX_VERSION}/no-freescale-flextimer-pwm.config \
+    ${WORKDIR}/fragments/${LINUX_VERSION}/less-iio-sensors.config \
     "
 
 SRC_URI:append = " \
@@ -32,4 +34,6 @@ SRC_URI:append = " \
     file://${LINUX_VERSION}/less-multifunction-device-drivers.config;subdir=fragments \
     file://${LINUX_VERSION}/no-usb-support.config;subdir=fragments \
     file://${LINUX_VERSION}/no-soundcard-support.config;subdir=fragments \
+    file://${LINUX_VERSION}/no-freescale-flextimer-pwm.config;subdir=fragments \
+    file://${LINUX_VERSION}/less-iio-sensors.config;subdir=fragments \
     "
