@@ -1,11 +1,18 @@
-inherit linux-stm32mp-kernel-optim
-
+inherit stm32mp-kernel-optim
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
-KERNEL_CONFIG_FRAGMENTS:append = " \
-    ${DEVICE_DRIVERS_CONFIG_FRAGS} \
+KERNEL_CONFIG_FRAGMENTS:append = " ${DEVICE_DRIVERS_CONFIG_FRAGS} \
     ${NET_SUPPORT_CONFIG_FRAGS} \
+    ${FS_CONFIG_FRAGS} \
+    ${KFEATURES_CONFIG_FRAGS} \
+    ${BOOTOPT_CONFIG_FRAGS} \
+    ${GENSETUP_CONFIG_FRAGS} \
+    ${DEBUG_CONFIG_FRAGS} \
     "
-SRC_URI:append = " \
-    ${DEVICE_DRIVERS_SRC} \
+SRC_URI:append = " ${DEVICE_DRIVERS_SRC} \
     ${NET_SUPPORT_SRC} \
+    ${FS_SUPPORT_SRC} \
+    ${KFEATURES_SRC} \
+    ${BOOTOPT_SRC} \
+    ${GENSETUP_SRC} \
+    ${DEBUG_SRC} \
     "
