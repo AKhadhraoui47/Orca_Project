@@ -6,3 +6,5 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=801f80980d171dd6425610833a22dbe6"
 inherit calf-image
 
 CALF_TYPE = "calfdev"
+COMPATIBLE_MACHINE = "^(tilikum-extended)$"
+

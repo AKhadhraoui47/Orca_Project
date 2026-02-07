@@ -1,0 +1,10 @@
+header:
+  version: 18
+  includes:
+    - kas/include/orca-layers.yml
+    - kas/include/layers.yml
+    - kas/include/local.yml
+    
+machine: tilikum-extended
+distro: orca
+target: calf-image-dev
