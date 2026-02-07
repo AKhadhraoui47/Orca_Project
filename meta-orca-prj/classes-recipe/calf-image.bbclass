@@ -4,10 +4,6 @@ python () {
     if d.getVar("CALF_TYPE", expand=True) not in calf_types :
         bb.fatal ("Define a compliant value for CALF_TYPE variable")
     d.prependVar("OVERRIDES", "${CALF_TYPE}:")
-
-    bb.note("IMAGE - MACHINE_FEATURES = %s" % d.getVar("MACHINE_FEATURES", True))
-    bb.note("IMAGE - OVERRIDES = %s" % d.getVar("OVERRIDES", True))
-
 }
 
 IMAGE_ROOTFS_MAXSIZE = "4194304"

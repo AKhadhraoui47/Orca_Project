@@ -51,10 +51,5 @@ BOOTOPT_SRC = "file://${LINUX_VERSION}/boot-opt/no-appended-dtb.config;subdir=fr
 GENSETUP_CONFIG_FRAGS = "${WORKDIR}/fragments/${LINUX_VERSION}/gen-setup/no-initramfs.config"
 GENSETUP_SRC = "file://${LINUX_VERSION}/gen-setup/no-initramfs.config;subdir=fragments"
 
-python () {
-    bb.note("BBCLASS - EXPANDED MACHINE_FEATURES = %s" % d.getVar("MACHINE_FEATURES", True))
-    bb.note("BBCLASS - EXPANDED OVERRIDES = %s" % d.getVar("OVERRIDES", True))
-}
-
 DEBUG_CONFIG_FRAGS= "${@bb.utils.contains('MACHINE_FEATURES','no-dbg','${WORKDIR}/fragments/${LINUX_VERSION}/debug/no-debugging.config','',d)}"
 DEBUG_SRC= "${@bb.utils.contains('MACHINE_FEATURES','no-dbg','file://${LINUX_VERSION}/debug/no-debugging.config;subdir=fragments','',d)}"

@@ -14,6 +14,6 @@ INIT_MANAGER:sysv = "sysvinit"
 
 #build information file
 INHERIT += "image-buildinfo"
-IMAGE_BUILDINFO_FILE = "${sysconfdir}/os-release"
+IMAGE_BUILDINFO_FILE = "${sysconfdir}/release-info"
 TIMESTAMP = "${DATETIME}"
 IMAGE_BUILDINFO_VARS = "DISTRO DISTRO_NAME DISTRO_VERSION IMAGE_NAME TIMESTAMP"
