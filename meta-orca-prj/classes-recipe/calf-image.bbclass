@@ -3,6 +3,7 @@ python () {
     calf_types = ["calfprod", "calfdev", "calfcore"]
     if d.getVar("CALF_TYPE", expand=True) not in calf_types :
         bb.fatal ("Define a compliant value for CALF_TYPE variable")
+    d.prependVar("OVERRIDES", "${CALF_TYPE}:")
 }
 
 IMAGE_ROOTFS_MAXSIZE = "4194304"
