@@ -21,7 +21,7 @@ The KAS version used in this project is kas 5.1.
 
 Rearranging the project structure may cause some problems with the [setup script](scripts/setuporca), so avoid changing the layout of the project.
 
-As mentionned above, this project should be portable and you should be able to run it on different hardware as a *Raspberry-pi* just by updating the [main kas file](kas/kas-orca.yml) and the [layers file](kas/include/layers.yml).
+As mentionned above, this project should be portable and you should be able to run it on different hardware as a *Raspberry-pi* just by updating a [kas file](kas/kas-core.yml) and the [layers file](kas/include/layers.yml).
 
 ## Build the project 
 
@@ -46,7 +46,7 @@ user@hostname:~/dir/Orca_Project$ ./scripts/setuporca prepare
 Now you can launch the build process:
 
 ```bash
-user@hostname:~/dir/orca$ ./scripts/setuporca build kas/kas-orca.yml
+user@hostname:~/dir/orca$ ./scripts/setuporca build kas/kas-core.yml
 ```
 
 Now you're all set to launch your *STM32MP135F-DK* board. To populate the image to your sd card, please refer to the official [STM32MP Wiki](https://wiki.st.com/stm32mpu/wiki/How_to_populate_the_SD_card_with_dd_command). If you're flashing using the *USB DFU* refer to the [Stm32Programmer](https://wiki.st.com/stm32mpu/wiki/STM32CubeProgrammer#How_to_flash_with_STM32CubeProgrammer).  
@@ -111,15 +111,23 @@ The theme for this project is based these core elements:
 
 ## About the Image
 
-Different image flavors are provided serving different purposes. You can choose which to use through *ORCA_TYPE* variable in [orca-image.bb](meta-orca-prj/recipes-images/orca/orca-image.bb).
+Different image flavors are provided serving different purposes. You can choose which to use through *CALF_TYPE* variable in *Image Recipe*.
 
--   **orcadev:** Providing development tools, libraries, compiler, make, debugging tools as gdb, and profiling tools ... (root access with empty-password).
--   **orcaprod:** Production image with builtin main application and limited user permissions. (ongoing developement)
--   **orcacore:** Basic image that is just able to boot, with user **login**: calf, **passwd:** linux.
+-   **calfdev:** Providing development tools, libraries, compiler, make, debugging tools as gdb, and profiling tools ... (root access with empty-password).
+-   **calfprod:** Production image with builtin main application and limited user permissions. (ongoing developement)
+-   **calfcore:** Basic image that is just able to boot, with user **login**: calf, **passwd:** linux.
+
+## About the Machine
+
+Two machines are presented in project, where one derives from other:
+-   **tilikum**: The main machine which kernel was very well optimized removing all unnecessary drivers for different devices, unneeded communication stacks, debugging features, ... Resulting a minimal **kernel of 15MB**
+-   **tilikum-extended**: Derives from tilikum, enabling all the debugging features of the kernel resulting a much larger kernel.
+
+Note that machines and images have compatibility constraints as follows *(calfdev - tilikum-extended)* and *(calfprod/calfcore - tilikum)* determined by the *COMPATIBLE_MACHINE* variable. The different combinations are put in seperate KAS files [kas-core](kas/kas-core.yml) - [kas-dev](kas/kas-dev.yml) - [kas-prod](kas/kas-prod.yml).
 
 ## References
 
 -   [Techleef Yocto Tutorial](https://www.youtube.com/watch?v=jmGmaY4qyWg&list=PLNpnO_Q_GAdRvyaiqXqFDc4B9nz2MvWnF): This serie is highly recommended, the content provided by the channel is an absolute gem. Special thanks to Eng. Talel Belhaj SALEM.
 -   [Official Yocto Documentation](https://docs.yoctoproject.org/5.0.15/index.html), [Official Bitbake User Manual](https://docs.yoctoproject.org/bitbake/bitbake-user-manual/bitbake-user-manual-intro.html): Do not skip documentation, it is the best and most solid way to learn and advance with complex systems as Yocto and Bitbake.
 -   [Official KAS Documentation](https://kas.readthedocs.io/en/5.1/): Both Kas and KAS container are available through this link.
-
+-   [STM32MP Wiki](https://wiki.st.com/stm32mpu/wiki/Deep_dive): Official documentation about the STM32MP series from software tools to guides to deep dives in interesting topics as *Secure Boot*, *TEE* ...
