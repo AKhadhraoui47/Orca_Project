@@ -1,17 +1,17 @@
-From 3e6ef3326ce7ffc38d63268c075d5e9215deec37 Mon Sep 17 00:00:00 2001
+From 682a926a126e9bd11a605cfb5aa3bdde1ba360bc Mon Sep 17 00:00:00 2001
 From: mohamed bilel khadhraoui <bkhadhraoui870@gmail.com>
-Date: Mon, 13 Apr 2026 15:10:16 +0100
+Date: Tue, 14 Apr 2026 15:44:10 +0100
 Subject: [PATCH] modified:   include/configs/stm32mp13_st_common.h
 
 ---
- include/configs/stm32mp13_st_common.h | 30 ---------------------------
- 1 file changed, 30 deletions(-)
+ include/configs/stm32mp13_st_common.h | 33 +++------------------------
+ 1 file changed, 3 insertions(+), 30 deletions(-)
 
 diff --git a/include/configs/stm32mp13_st_common.h b/include/configs/stm32mp13_st_common.h
-index 813fec0b..a4d83050 100644
+index 813fec0b..b953d34a 100644
 --- a/include/configs/stm32mp13_st_common.h
 +++ b/include/configs/stm32mp13_st_common.h
-@@ -19,39 +19,9 @@
+@@ -19,39 +19,12 @@
  					 230400, 460800, 921600, \
  					 1000000, 2000000, 4000000}
  
@@ -39,6 +39,8 @@ index 813fec0b..a4d83050 100644
 -		"then env set boot_targets mmc0; fi;" \
 -		"run distro_bootcmd;" \
 -	"fi;\0"
++#define TILIKUM_BOOTCMD \
++	"tilikum_bootcmd=sysboot ${boot_device} ${boot_instance}:8 any ${pxefile_addr_r} /extlinux/extlinux.conf\0"
  
 -#undef CFG_EXTRA_ENV_SETTINGS
  #define CFG_EXTRA_ENV_SETTINGS \
@@ -46,6 +48,7 @@ index 813fec0b..a4d83050 100644
 -	ST_STM32MP13_BOOTCMD \
 -	BOOTENV \
 -	STM32MP_EXTRA \
++	TILIKUM_BOOTCMD \
  	STM32MP_BOARD_EXTRA_ENV
  
  #endif
