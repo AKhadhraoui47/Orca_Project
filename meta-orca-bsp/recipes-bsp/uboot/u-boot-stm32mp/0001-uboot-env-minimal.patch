@@ -40,7 +40,7 @@ index 813fec0b..b953d34a 100644
 -		"run distro_bootcmd;" \
 -	"fi;\0"
 +#define TILIKUM_BOOTCMD \
-+	"tilikum_bootcmd=sysboot ${boot_device} ${boot_instance}:8 any ${pxefile_addr_r} /extlinux/extlinux.conf\0"
++	"tilikum_bootcmd=sysboot ${boot_device} ${boot_instance}:8 any ${pxefile_addr_r} ${bootfile}\0"
  
 -#undef CFG_EXTRA_ENV_SETTINGS
  #define CFG_EXTRA_ENV_SETTINGS \
