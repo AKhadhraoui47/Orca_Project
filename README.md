@@ -129,7 +129,7 @@ Note that machines and images have compatibility constraints as follows *(calfde
 
 To make booting process faster an *extlinux.conf* file is customized to hold a single label and automatic booting is accomplished without user input. 
 
-Custom uboot env variables are added: 
+Custom uboot env variables are added through **CFG_EXTRA_ENV_SETTINGS** in **stm32mp13_st_sommon.h**: 
 
 *   **tilikum_splash**: display the background boot image as **MENU BACKGROUND** entry in **extlinux.conf** would cancel the autoboot for some reason.
 *   **tilikum_bootcmd**: load and boot according to the **extlinux.conf** using **sysboot**.
