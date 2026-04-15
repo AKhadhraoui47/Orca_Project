@@ -1,0 +1,32 @@
+From 7eabb84b50abb55b509e3bfc1e0bd5fb0db6d643 Mon Sep 17 00:00:00 2001
+From: mohamed bilel khadhraoui <bkhadhraoui870@gmail.com>
+Date: Wed, 15 Apr 2026 13:31:46 +0100
+Subject: [PATCH] modified:   include/configs/stm32mp13_st_common.h
+
+---
+ include/configs/stm32mp13_st_common.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/include/configs/stm32mp13_st_common.h b/include/configs/stm32mp13_st_common.h
+index b953d34a..51e4e4e9 100644
+--- a/include/configs/stm32mp13_st_common.h
++++ b/include/configs/stm32mp13_st_common.h
+@@ -19,11 +19,14 @@
+ 					 230400, 460800, 921600, \
+ 					 1000000, 2000000, 4000000}
+ 
++#define TILIKUM_SPLASH \
++	"tilikum_splash=load mmc 0:8 0xc0000000 /splash_landscape.bmp;bmp display 0xc0000000\0"
+ #define TILIKUM_BOOTCMD \
+-	"tilikum_bootcmd=sysboot ${boot_device} ${boot_instance}:8 any ${pxefile_addr_r} /extlinux/extlinux.conf\0"
++	"tilikum_bootcmd=run tilikum_splash;sysboot ${boot_device} ${boot_instance}:8 any ${pxefile_addr_r} /extlinux/extlinux.conf\0"
+ 
+ #define CFG_EXTRA_ENV_SETTINGS \
+ 	STM32MP_MEM_LAYOUT \
++	TILIKUM_SPLASH \
+ 	TILIKUM_BOOTCMD \
+ 	STM32MP_BOARD_EXTRA_ENV
+ 
+-- 
+2.43.0
+
