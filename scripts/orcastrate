@@ -103,12 +103,13 @@ do_check_args(){
                 then
                     echo -n "share:$yshare_dir" >> $PRJ_DIR/scripts/.info
                 else
-                    sed -i "s|share.*|share:${yshare_dir}|" $PRJ_DIR/scripts/.info
+                    sed -i "s|share.*|share:${yshare_dir}|" $PRJ_DIR/scripts/.info$PRJ_DIR/
                 fi
                 return 0
             else
                 local cmd=$1
                 local kas_yaml=$2
+                kas_yaml=$PRJ_DIR/kas/$kas_yaml 
                 if [ $cmd != "shell" ] && [ $cmd != "build" ] && [ $cmd != "checkout" ] && [ $cmd != "clean" ]
                 then
                     echo "Error - Unknown commmand"
@@ -143,7 +144,7 @@ main(){
             exit 1
         }
         local share_dir=$(sed 's/share\://' $PRJ_DIR/scripts/.info)
-        kas-container --runtime-args "-v $share_dir:/work/share/:rw" $cmd $kas_yaml || {
+        kas-container --runtime-args "-v $share_dir:/work/share/:rw" $cmd $PRJ_DIR/kas/$kas_yaml || {
         echo "Error - Environment exit with error"
         exit 1 
         }
