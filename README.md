@@ -10,7 +10,7 @@ This project delivers a customizable linux distribution with different image fla
 -   **Security:** Enhance security through enabling CVE-Checks, security flags and exploring *secure boot*
 -   **Reproducibilty:** KAS file describes thouroughly all the dependencies and the required layers to reproduce the image for the mentioned board
 -   **Isolation:** All required python packages are installed in a python virtual environment and all builds are produced within a KAS container
--   **Abstraction:** Image flavors can be tuned through some variables. Also, a [setup bash script](scripts/setuporca) as a wrapper to the KAS container to control few project specific requirements.
+-   **Abstraction:** Image flavors can be tuned through some variables. Also, a [setup bash script](scripts/orcastrate) as a wrapper to the KAS container to control few project specific requirements.
 -   **Leightweight:** Customizing the image and optimizing the kernel to reduce ressources consumption and make the image as specific to the application requirements as possible
 
 ## Notes
@@ -19,7 +19,7 @@ This project was developed over the [scarthgap release](https://wiki.yoctoprojec
 
 The KAS version used in this project is kas 5.1.
 
-Rearranging the project structure may cause some problems with the [setup script](scripts/setuporca), so avoid changing the layout of the project.
+Rearranging the project structure may cause some problems with the [setup script](scripts/orcastrate), so avoid changing the layout of the project.
 
 As mentionned above, this project should be portable and you should be able to run it on different hardware as a *Raspberry-pi* just by updating a [kas file](kas/kas-core.yml) and the [layers file](kas/include/layers.yml).
 
@@ -36,38 +36,38 @@ Clone the project:
 user@hostname:~/dir$ git clone --single-branch --branch main git@github.com:AKhadhraoui47/Orca_Project.git
 ```
 
-We will start by setting up the environment, directories and installing the different requirements (e.g KAS) by running the [setup script](#setuporca-script):
+We will start by setting up the environment, directories and installing the different requirements (e.g KAS) by running the [setup script](#orcastrate-script):
 
 ```bash
 user@hostname:~/dir/Orca_Project$ cd Orca_Project
-user@hostname:~/dir/Orca_Project$ ./scripts/setuporca prepare
+user@hostname:~/dir/Orca_Project$ ./scripts/orcastrate prepare
 ```
 
 Now you can launch the build process:
 
 ```bash
-user@hostname:~/dir/orca$ ./scripts/setuporca build kas/kas-core.yml
+user@hostname:~/dir/orca$ ./scripts/orcastrate build kas/kas-core.yml
 ```
 
 Now you're all set to launch your *STM32MP135F-DK* board. To populate the image to your sd card, please refer to the official [STM32MP Wiki](https://wiki.st.com/stm32mpu/wiki/How_to_populate_the_SD_card_with_dd_command). If you're flashing using the *USB DFU* refer to the [Stm32Programmer](https://wiki.st.com/stm32mpu/wiki/STM32CubeProgrammer#How_to_flash_with_STM32CubeProgrammer).  
 
-## Setuporca Script
+## Orcastrate Script
 
-The [setuporca script](scripts/setuporca) is a wrapper over KAS container and provides some abstraction to the environment setup process, configurations and container usage.
+The [orcastrate script](scripts/orcastrate) is a wrapper over KAS container and provides some abstraction to the environment setup process, configurations and container usage.
 
 The script can be executed anywhere from your filesystem, so it would be useful to add its path the *PATH* environment variable: 
 
 ```bash
-user@hostname:~/dir$ export PATH=$PATH:/path/to/setuporca 
+user@hostname:~/dir$ export PATH=$PATH:/path/to/orcastrate 
 ```
 
 ### Setup Prepare
 
 ```bash
-user@hostname:~/dir$ setuporca prepare dir/to/share/
+user@hostname:~/dir$ orcastrate prepare dir/to/share/
 ```
 
--   This command must be run the first time you clone the project. To prepare the project environment, run the *setuporca* with the *prepare* plugin, optionally you can provide the path to a specific directory (absolute or relative) where shared *downloads* and *sstate-cache* are available. If ignored a shared directory *YoctoShare/* will be automatically at the same level where the project was cloned. Note that the provided directory if not ignored must provide *downloads* and *sstate-cache* sub-directories.
+-   This command must be run the first time you clone the project. To prepare the project environment, run the *orcastrate* with the *prepare* plugin, optionally you can provide the path to a specific directory (absolute or relative) where shared *downloads* and *sstate-cache* are available. If ignored a shared directory *YoctoShare/* will be automatically at the same level where the project was cloned. Note that the provided directory if not ignored must provide *downloads* and *sstate-cache* sub-directories.
 
 -   This plugin reponsible for setting the python virtual environment where KAS will be installed isolated from your host system.
 
@@ -78,7 +78,7 @@ user@hostname:~/dir$ setuporca prepare dir/to/share/
 ### Setup Shell
 
 ```bash
-user@hostname:~/dir$ setuporca shell dir/to/kas-file.yml
+user@hostname:~/dir$ orcastrate shell kas-file.yml
 ```
 
 -   Launches KAS container shell that can be exploited debugging or inspecting the values of some variables, based on the configuration files in the [KAS directory](kas/)
@@ -86,7 +86,7 @@ user@hostname:~/dir$ setuporca shell dir/to/kas-file.yml
 ### Setup Build
 
 ```bash
-user@hostname:~/dir$ setuporca build dir/to/kas-file.yml
+user@hostname:~/dir$ orcastrate build kas-file.yml
 ```
 
 -   Launches the build based on the configuration of the KAS files.
@@ -94,7 +94,7 @@ user@hostname:~/dir$ setuporca build dir/to/kas-file.yml
 ### Setup Clean
 
 ```bash
-user@hostname:~/dir$ setuporca clean dir/to/kas-file.yml
+user@hostname:~/dir$ orcastrate clean kas-file.yml
 ```
 
 -   Removes the artifacts directory *build/tmp/*.
@@ -124,6 +124,15 @@ Two machines are presented in project, where one derives from other:
 -   **tilikum-extended**: Derives from tilikum, enabling all the debugging features of the kernel resulting a much larger kernel.
 
 Note that machines and images have compatibility constraints as follows *(calfdev - tilikum-extended)* and *(calfprod/calfcore - tilikum)* determined by the *COMPATIBLE_MACHINE* variable. The different combinations are put in seperate KAS files [kas-core](kas/kas-core.yml) - [kas-dev](kas/kas-dev.yml) - [kas-prod](kas/kas-prod.yml).
+
+## About UBOOT
+
+To make booting process faster an *extlinux.conf* file is customized to hold a single label and automatic booting is accomplished without user input. 
+
+Custom uboot env variables are added: 
+
+*   **tilikum_splash**: display the background boot image as **MENU BACKGROUND** entry in **extlinux.conf** would cancel the autoboot for some reason.
+*   **tilikum_bootcmd**: load and boot according to the **extlinux.conf** using **sysboot**.
 
 ## References
 
