@@ -1,0 +1,27 @@
+From 5bac389fa646790adb5c0ca2bf152078e8edd821 Mon Sep 17 00:00:00 2001
+From: mohamed bilel khadhraoui <bkhadhraoui870@gmail.com>
+Date: Fri, 24 Apr 2026 14:27:21 +0100
+Subject: [PATCH] modified:   include/configs/stm32mp13_st_common.h
+
+---
+ include/configs/stm32mp13_st_common.h | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/include/configs/stm32mp13_st_common.h b/include/configs/stm32mp13_st_common.h
+index 51e4e4e9..e62cad17 100644
+--- a/include/configs/stm32mp13_st_common.h
++++ b/include/configs/stm32mp13_st_common.h
+@@ -23,6 +23,10 @@
+ 	"tilikum_splash=load mmc 0:8 0xc0000000 /splash_landscape.bmp;bmp display 0xc0000000\0"
+ #define TILIKUM_BOOTCMD \
+ 	"tilikum_bootcmd=run tilikum_splash;sysboot ${boot_device} ${boot_instance}:8 any ${pxefile_addr_r} /extlinux/extlinux.conf\0"
++	
++#ifdef CFG_EXTRA_ENV_SETTINGS
++#undef CFG_EXTRA_ENV_SETTINGS
++#endif
+ 
+ #define CFG_EXTRA_ENV_SETTINGS \
+ 	STM32MP_MEM_LAYOUT \
+-- 
+2.43.0
+
